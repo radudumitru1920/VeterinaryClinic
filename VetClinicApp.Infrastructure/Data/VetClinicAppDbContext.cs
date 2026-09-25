@@ -9,63 +9,62 @@ namespace VetClinicApp.Infrastructure.Data
             : base(options)
         { 
         }
-        public DbSet<Client> Clients {get;set;}
-        public DbSet<Pet> Pets {get;set;}
-        public DbSet<Appointment> Appointments {get;set;}
-        public DbSet<Staff> Staffs{get;set;}
-        public DbSet<AssistantRequest> AssistantRequests{get;set;}
+        public DbSet<User> Users  {get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Staff> Staffs{ get; set; }
+        public DbSet<AssistantRequest> AssistantRequests{ get; set; }
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
             base.OnModelCreating(modelbuilder);
+
             {
-            modelbuilder.Entity<Pet>()
-            .Property(p => p.Tip)
+            modelbuilder.Entity<User>()
+            .HasIndex(c => c.Email)
+            .IsUnique();
+            }
+            {
+                modelbuilder.Entity<Appointment>()
+                .Property(p => p.Time)
+                .HasColumnType("time(0)");
+            }
+
+            {
+             modelbuilder.Entity<Appointment>()
+            .Property(p => p.Status)
             .HasConversion<string>();
             }
-            {
-              modelbuilder.Entity<Pet>()
-              .HasOne(a => a.Client)
-              .WithMany(b => b.Pets)
-              .HasForeignKey(c => c.clientID)
-              .OnDelete(DeleteBehavior.Cascade);
-            }
-            {
-                modelbuilder.Entity<Appointment>()
-                .Property(p => p.Status)
-                .HasConversion<string>();
-            }
-            {
-                modelbuilder.Entity<Appointment>()
-                .HasOne(a => a.Client)
-                .WithMany(b => b.Appointments)
-                .OnDelete(DeleteBehavior.Cascade);
-            }
+
+          //  {
+           //     modelbuilder.Entity<Appointment>()
+           //     .HasOne(a => a.User)
+            //    .WithMany(b => b.Appointments)
+           //     .OnDelete(DeleteBehavior.Cascade);
+           // }
+
             {
                 modelbuilder.Entity<Staff>()
                 .Property(p => p.Role)
             .HasConversion<string>();
             }
+
             {
                 modelbuilder.Entity<AssistantRequest>()
-                .HasKey(p => p.requestID);
+                .HasKey(p => p.RequestId);
             }
+
             {
                 modelbuilder.Entity<AssistantRequest>()
                 .Property(p => p.Status)
                 .HasConversion<string>();
             }
                 
-            {
-                modelbuilder.Entity<ClientDoctor>()
-                .HasKey(p => p.staffID);
-            }
             
         }
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=VeterinaryClinicDb;Trusted_Connection=True;TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=VetClinicDb;Trusted_Connection=True;TrustServerCertificate=True;");
             }
         }
     }

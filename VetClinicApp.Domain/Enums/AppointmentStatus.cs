@@ -1,6 +1,7 @@
 namespace VetClinicApp.Domain.Enums;
 public enum AppointmentStatus{
-    InAsteptare=1,
-    Acceptat=2,
-    Respins=3
+    Pending=1,
+    Accepted=2,
+    Rejected=3,
+    Canceled=4
 }

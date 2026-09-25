@@ -17,160 +17,85 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.10")
+                .HasAnnotation("ProductVersion", "10.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("VetClinicApp.Domain.Entities.Appointment", b =>
                 {
-                    b.Property<int>("appointmentID")
+                    b.Property<Guid>("AppointmentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("appointmentID"));
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Motiv")
+                    b.Property<Guid?>("PetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NrTelefon")
+                    b.Property<string>("Reason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nume")
+                    b.Property<Guid?>("StaffId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Ora")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeOnly>("Time")
+                        .HasColumnType("time");
 
-                    b.Property<int>("clientID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("appointmentID");
+                    b.HasKey("AppointmentId");
 
-                    b.HasIndex("clientID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("VetClinicApp.Domain.Entities.AssistantRequest", b =>
                 {
-                    b.Property<int>("requestID")
+                    b.Property<int>("RequestId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("requestID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"));
 
-                    b.Property<DateTime>("Data")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Motiv")
+                    b.Property<DateTime>("Hour")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Ora")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("staffID")
                         .HasColumnType("int");
 
-                    b.HasKey("requestID");
+                    b.HasKey("RequestId");
 
                     b.HasIndex("staffID");
 
                     b.ToTable("AssistantRequests");
-                });
-
-            modelBuilder.Entity("VetClinicApp.Domain.Entities.Client", b =>
-                {
-                    b.Property<int>("clientID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("clientID"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NrTelefon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nume")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Prenume")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("clientID");
-
-                    b.ToTable("Clients");
-                });
-
-            modelBuilder.Entity("VetClinicApp.Domain.Entities.ClientDoctor", b =>
-                {
-                    b.Property<int>("staffID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("staffID"));
-
-                    b.Property<string>("Nume")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("staffID1")
-                        .HasColumnType("int");
-
-                    b.HasKey("staffID");
-
-                    b.HasIndex("staffID1");
-
-                    b.ToTable("ClientDoctor");
-                });
-
-            modelBuilder.Entity("VetClinicApp.Domain.Entities.Pet", b =>
-                {
-                    b.Property<int>("petID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("petID"));
-
-                    b.Property<int>("Greutate")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nume")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tip")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Varsta")
-                        .HasColumnType("int");
-
-                    b.Property<int>("clientID")
-                        .HasColumnType("int");
-
-                    b.HasKey("petID");
-
-                    b.HasIndex("clientID");
-
-                    b.ToTable("Pets");
                 });
 
             modelBuilder.Entity("VetClinicApp.Domain.Entities.Staff", b =>
@@ -194,15 +119,50 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                     b.ToTable("Staffs");
                 });
 
+            modelBuilder.Entity("VetClinicApp.Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("VetClinicApp.Domain.Entities.Appointment", b =>
                 {
-                    b.HasOne("VetClinicApp.Domain.Entities.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("clientID")
+                    b.HasOne("VetClinicApp.Domain.Entities.User", null)
+                        .WithMany("Appointments")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("VetClinicApp.Domain.Entities.AssistantRequest", b =>
@@ -216,26 +176,9 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                     b.Navigation("Staff");
                 });
 
-            modelBuilder.Entity("VetClinicApp.Domain.Entities.ClientDoctor", b =>
+            modelBuilder.Entity("VetClinicApp.Domain.Entities.User", b =>
                 {
-                    b.HasOne("VetClinicApp.Domain.Entities.Staff", "Staff")
-                        .WithMany()
-                        .HasForeignKey("staffID1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Staff");
-                });
-
-            modelBuilder.Entity("VetClinicApp.Domain.Entities.Pet", b =>
-                {
-                    b.HasOne("VetClinicApp.Domain.Entities.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("clientID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
+                    b.Navigation("Appointments");
                 });
 #pragma warning restore 612, 618
         }
