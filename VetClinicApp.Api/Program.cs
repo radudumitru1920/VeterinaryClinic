@@ -18,6 +18,7 @@ sqlServerOptions => sqlServerOptions.MigrationsAssembly("VetClinicApp.Infrastruc
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IPetService, PetService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

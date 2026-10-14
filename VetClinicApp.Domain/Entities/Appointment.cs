@@ -7,8 +7,7 @@ public class Appointment
 
     required public Guid UserId { get; set; }
     
-
-    public Guid? PetId { get; set; }
+     public Guid? PetId { get; set; }
 
     public Guid? StaffId { get; set; }
 
@@ -19,6 +18,12 @@ public class Appointment
     required public string Email { get; set; }
 
     required public string PhoneNumber { get; set; }
+
+    required public string PetName { get; set; }
+
+    required public string PetType { get; set; }
+
+    required public string PetBreed { get; set; }
 
     required public DateOnly Date { get; set; }
 

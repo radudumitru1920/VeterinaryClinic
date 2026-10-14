@@ -5,12 +5,11 @@ public class User{
 
     required public Guid UserId { get; set; }
 
+    public List<Pet> Pets { get; set; } = new List<Pet>();
+
     required public string Name { get; set; }
 
     required public string LastName { get; set; }
-
-
-    public List<Appointment> Appointments { get; set; }= [];
 
     required public string PhoneNumber { get; set; }
 

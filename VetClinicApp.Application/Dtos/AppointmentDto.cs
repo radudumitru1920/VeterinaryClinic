@@ -14,6 +14,12 @@ public class AppointmentDto
 
     public TimeOnly Time { get; set; }
 
+    required public string PetName { get; set; }
+
+    required public string PetType { get; set; }
+
+    required public string PetBreed { get; set; }
+
     public AppointmentStatus status { get; set; }
 
 }

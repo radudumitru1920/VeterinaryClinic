@@ -35,8 +35,28 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PetBreed")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("PetId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PetName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PetType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -54,14 +74,12 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeOnly>("Time")
-                        .HasColumnType("time");
+                        .HasColumnType("time(0)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("AppointmentId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Appointments");
                 });
@@ -96,6 +114,33 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                     b.HasIndex("staffID");
 
                     b.ToTable("AssistantRequests");
+                });
+
+            modelBuilder.Entity("VetClinicApp.Domain.Entities.Pet", b =>
+                {
+                    b.Property<Guid>("PetId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PetBreed")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PetName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PetType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PetId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Pets");
                 });
 
             modelBuilder.Entity("VetClinicApp.Domain.Entities.Staff", b =>
@@ -156,15 +201,6 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("VetClinicApp.Domain.Entities.Appointment", b =>
-                {
-                    b.HasOne("VetClinicApp.Domain.Entities.User", null)
-                        .WithMany("Appointments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("VetClinicApp.Domain.Entities.AssistantRequest", b =>
                 {
                     b.HasOne("VetClinicApp.Domain.Entities.Staff", "Staff")
@@ -176,9 +212,18 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                     b.Navigation("Staff");
                 });
 
+            modelBuilder.Entity("VetClinicApp.Domain.Entities.Pet", b =>
+                {
+                    b.HasOne("VetClinicApp.Domain.Entities.User", null)
+                        .WithMany("Pets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("VetClinicApp.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Appointments");
+                    b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618
         }

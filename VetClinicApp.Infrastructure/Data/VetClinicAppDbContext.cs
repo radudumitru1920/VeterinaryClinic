@@ -11,6 +11,7 @@ namespace VetClinicApp.Infrastructure.Data
         }
         public DbSet<User> Users  {get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Pet> Pets { get; set; }
         public DbSet<Staff> Staffs{ get; set; }
         public DbSet<AssistantRequest> AssistantRequests{ get; set; }
         protected override void OnModelCreating(ModelBuilder modelbuilder)
@@ -27,6 +28,14 @@ namespace VetClinicApp.Infrastructure.Data
                 .Property(p => p.Time)
                 .HasColumnType("time(0)");
             }
+
+            // {
+            //     modelbuilder.Entity<Appointment>()
+            //     .HasOne<Pet>()
+            //     .WithMany()
+            //     .HasForeignKey(a => a.PetId)
+            //     .OnDelete(DeleteBehavior.Cascade);
+            // }
 
             {
              modelbuilder.Entity<Appointment>()

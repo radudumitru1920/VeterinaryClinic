@@ -36,8 +36,8 @@ namespace VetClinicApp.Infrastructure.Services
                 var User = new User()
                 {
                     UserId = Guid.NewGuid(),
-                    Name = dto.Name,
                     LastName = dto.LastName,
+                    Name = dto.Name,
                     PhoneNumber = dto.PhoneNumber,
                     Email = dto.Email,
                     PasswordHash = string.Empty
@@ -53,8 +53,8 @@ namespace VetClinicApp.Infrastructure.Services
                 return new UserDto
                 {
                     UserId = User.UserId,
-                    Name = User.Name,
                     LastName = User.LastName,
+                    Name = User.Name,                
                     PhoneNumber = User.PhoneNumber,
                     Email = User.Email
                 };
@@ -80,7 +80,7 @@ namespace VetClinicApp.Infrastructure.Services
                     throw new UnauthorizedAccessException("Incorrect e-mail or password");
                 }
 
-                var jwtToken = _jwtService.GenerateToken(User.UserId, User.Email, User.PhoneNumber, User.Name, User.LastName, User.Role.ToString());
+                var jwtToken = _jwtService.GenerateToken(User.UserId, User.Email, User.PhoneNumber, User.LastName, User.Name, User.Role.ToString());
 
                 return jwtToken;
         }
