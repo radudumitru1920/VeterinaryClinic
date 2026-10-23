@@ -6,6 +6,7 @@ using System.Security.Claims;
 using VetClinicApp.Application.Dtos;
 using VetClinicApp.Application.Interfaces;
 using VetClinicApp.Domain.Entities;
+using VetClinicApp.Domain.Enums;
 using VetClinicApp.Dtos;
 
 

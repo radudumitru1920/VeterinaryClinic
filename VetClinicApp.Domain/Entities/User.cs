@@ -15,7 +15,7 @@ public class User{
 
     required public string Email{ get; set; }
 
-    public Role Role { get; set; }= Role.Client;
+    public Role role { get; set; }= Role.Client;
 
     required public string PasswordHash { get; set; } 
 

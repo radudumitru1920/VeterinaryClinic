@@ -10,6 +10,10 @@ public class Appointment
      public Guid? PetId { get; set; }
 
     public Guid? StaffId { get; set; }
+    
+    public string StaffName { get; set; }
+
+    public string StaffLastName { get; set; }
 
     required public string Name { get; set; }
 

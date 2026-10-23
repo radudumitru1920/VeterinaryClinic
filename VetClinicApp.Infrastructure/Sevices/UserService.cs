@@ -80,7 +80,7 @@ namespace VetClinicApp.Infrastructure.Services
                     throw new UnauthorizedAccessException("Incorrect e-mail or password");
                 }
 
-                var jwtToken = _jwtService.GenerateToken(User.UserId, User.Email, User.PhoneNumber, User.LastName, User.Name, User.Role.ToString());
+                var jwtToken = _jwtService.GenerateToken(User.UserId, User.Email, User.PhoneNumber, User.LastName, User.Name, User.role.ToString());
 
                 return jwtToken;
         }

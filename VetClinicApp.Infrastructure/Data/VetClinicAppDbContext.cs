@@ -12,7 +12,6 @@ namespace VetClinicApp.Infrastructure.Data
         public DbSet<User> Users  {get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Pet> Pets { get; set; }
-        public DbSet<Staff> Staffs{ get; set; }
         public DbSet<AssistantRequest> AssistantRequests{ get; set; }
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
@@ -49,12 +48,6 @@ namespace VetClinicApp.Infrastructure.Data
             //    .WithMany(b => b.Appointments)
            //     .OnDelete(DeleteBehavior.Cascade);
            // }
-
-            {
-                modelbuilder.Entity<Staff>()
-                .Property(p => p.Role)
-            .HasConversion<string>();
-            }
 
             {
                 modelbuilder.Entity<AssistantRequest>()

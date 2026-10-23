@@ -3,6 +3,8 @@ using VetClinicApp.Domain.Entities;
 using VetClinicApp.Infrastructure.Data;
 using VetClinicApp.Application.Interfaces;
 using VetClinicApp.Application.Dtos;
+using System.Diagnostics.CodeAnalysis;
+using VetClinicApp.Domain.Enums;
 
 namespace VetClinicApp.Infrastructure.Services
 {
@@ -30,6 +32,8 @@ public class AppointmentService : IAppointmentService
 
             var pet = await _context.Pets.FirstOrDefaultAsync(p => p.UserId == userId && p.PetId == dto.PetId);
 
+            var medic = await _context.Users.FirstOrDefaultAsync(a => a.UserId == dto.MedicId && a.role == Role.Medic);
+
             // var appointment = Appointment.Create(
             //     UserId,
             //     petId: 0,
@@ -44,11 +48,13 @@ public class AppointmentService : IAppointmentService
                 AppointmentId = Guid.NewGuid(),
                 UserId = userId,
                 PhoneNumber = phoneNumber,
+                StaffId = dto.MedicId,
+                StaffName = medic.Name,
+                StaffLastName = medic.LastName,
                 PetId = dto.PetId,
                 PetName = pet.PetName,
                 PetType = pet.PetType.ToString(),
                 PetBreed = pet.PetBreed,
-                //StaffId = Guid.NewGuid(),
                 Date = dto.date,
                 Time = dto.time,
                 Reason = dto.reason,
