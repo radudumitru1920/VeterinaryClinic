@@ -4,9 +4,9 @@ namespace VetClinicApp.Application.Dtos;
 
 public class RegisterUserDto
 {
-    public string Name { get; set; } = string.Empty;
-    
     public string LastName { get; set; }
+
+    public string Name { get; set; } 
 
     public string PhoneNumber { get; set; }
 

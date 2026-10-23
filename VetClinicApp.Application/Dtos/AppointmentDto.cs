@@ -8,11 +8,15 @@ public class AppointmentDto
 {
     public Guid AppointmentId { get; set; }
 
-   // required virtual public UserDto? UserDto { get; set; }
-
     public DateOnly Date { get; set; }
 
     public TimeOnly Time { get; set; }
+
+    required public string PetName { get; set; }
+
+    required public string PetType { get; set; }
+
+    required public string PetBreed { get; set; }
 
     public AppointmentStatus status { get; set; }
 

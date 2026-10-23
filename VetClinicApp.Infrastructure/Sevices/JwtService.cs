@@ -17,7 +17,7 @@ namespace VetClinicApp.Infrastructure.Services
             _configuration = configuration;
         }
 
-        public string GenerateToken(Guid userId, string email, string phonenumber, string name, string lastname, string role)
+        public string GenerateToken(Guid userId, string phonenumber, string email, string lastname, string name, string role)
         {
            
             var jwtSettings = _configuration.GetSection("JwtSettings");
@@ -33,11 +33,12 @@ namespace VetClinicApp.Infrastructure.Services
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString()), 
+                new Claim("PetId", Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Email, email), 
                 new Claim("PhoneNumber", phonenumber),         
                 new Claim("Name", name),           
                 new Claim("LastName", lastname),           
-                new Claim(ClaimTypes.Role, role),                       
+                new Claim(ClaimTypes.Role, role),                     
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) 
             };
 

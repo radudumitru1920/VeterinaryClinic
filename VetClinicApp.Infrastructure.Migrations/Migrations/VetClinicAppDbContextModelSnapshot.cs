@@ -35,8 +35,28 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PetBreed")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("PetId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PetName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PetType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -49,19 +69,25 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                     b.Property<Guid?>("StaffId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("StaffLastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StaffName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeOnly>("Time")
-                        .HasColumnType("time");
+                        .HasColumnType("time(0)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("AppointmentId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Appointments");
                 });
@@ -88,35 +114,36 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("staffID")
-                        .HasColumnType("int");
-
                     b.HasKey("RequestId");
-
-                    b.HasIndex("staffID");
 
                     b.ToTable("AssistantRequests");
                 });
 
-            modelBuilder.Entity("VetClinicApp.Domain.Entities.Staff", b =>
+            modelBuilder.Entity("VetClinicApp.Domain.Entities.Pet", b =>
                 {
-                    b.Property<int>("staffID")
+                    b.Property<Guid>("PetId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PetBreed")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PetName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PetType")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("staffID"));
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Nume")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("PetId");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasIndex("UserId");
 
-                    b.HasKey("staffID");
-
-                    b.ToTable("Staffs");
+                    b.ToTable("Pets");
                 });
 
             modelBuilder.Entity("VetClinicApp.Domain.Entities.User", b =>
@@ -145,7 +172,7 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
+                    b.Property<int>("role")
                         .HasColumnType("int");
 
                     b.HasKey("UserId");
@@ -156,29 +183,18 @@ namespace VetClinicApp.Infrastructure.Migrations.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("VetClinicApp.Domain.Entities.Appointment", b =>
+            modelBuilder.Entity("VetClinicApp.Domain.Entities.Pet", b =>
                 {
                     b.HasOne("VetClinicApp.Domain.Entities.User", null)
-                        .WithMany("Appointments")
+                        .WithMany("Pets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("VetClinicApp.Domain.Entities.AssistantRequest", b =>
-                {
-                    b.HasOne("VetClinicApp.Domain.Entities.Staff", "Staff")
-                        .WithMany()
-                        .HasForeignKey("staffID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Staff");
-                });
-
             modelBuilder.Entity("VetClinicApp.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Appointments");
+                    b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618
         }
